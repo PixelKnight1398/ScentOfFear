@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://uu3m28um53xv"]
+
+[ext_resource type="Script" uid="uid://dwy7k8j4m1mrl" path="res://game.gd" id="1_7jktm"]
+[ext_resource type="PackedScene" uid="uid://cs6ai3ianfb7e" path="res://player/player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://daxk4ehvqy6rn" path="res://IndependentCamera.gd" id="2_e2o6t"]
+[ext_resource type="PackedScene" uid="uid://0xbnbhymfbad" path="res://items/guns/1911.tscn" id="3_feb5d"]
+[ext_resource type="PackedScene" uid="uid://dv4h3fy5r44a0" path="res://zombie.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://bsqojb3go42l3" path="res://items/guns/AK47.tscn" id="6_ryrav"]
+[ext_resource type="PackedScene" uid="uid://dw2ndtlonmx0r" path="res://house_1.tscn" id="7_eow3j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jktm"]
+size = Vector3(1, 1, 3.445)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ryrav"]
+size = Vector3(1, 1, 3.445)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_fc0e3"]
+vertices = PackedVector3Array(-9.5, 0.4, -9.5, -9.5, 0.4, 9.5, 9.5, 0.4, 9.5, 9.5, 0.4, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_height = 2.0
+agent_radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e2o6t"]
+albedo_color = Color(0.150531, 0.155679, 0.160813, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_feb5d"]
+material = SubResource("StandardMaterial3D_e2o6t")
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fc0e3"]
+size = Vector3(20, 0.2, 20)
+
+[node name="Game" type="Node3D" node_paths=PackedStringArray("spawn_points_container")]
+script = ExtResource("1_7jktm")
+spawn_points_container = NodePath("SpawnPoints")
+zombie_scene = ExtResource("4_fc0e3")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_80nbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.604995, 1.32233, 1.90591)
+camera = NodePath("../Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5815, 4.52435)
+script = ExtResource("2_e2o6t")
+target = NodePath("../Player")
+max_zoom = 10.0
+initial_height = 12.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6.3415, 0)
+
+[node name="Table" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69789, 0.5, 3.30119)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00164795)
+shape = SubResource("BoxShape3D_7jktm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
+mesh = SubResource("BoxMesh_ryrav")
+
+[node name="1911" parent="." instance=ExtResource("3_feb5d")]
+transform = Transform3D(-3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, 0, 0, 0.07, -5.72263, 1.04831, 4.3036)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_fc0e3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+mesh = SubResource("BoxMesh_feb5d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_fc0e3")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="SpawnMarker1" type="Marker3D" parent="SpawnPoints" groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, 0)
+
+[node name="SpawnMarker2" type="Marker3D" parent="SpawnPoints" groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, -4.72738)
+
+[node name="SpawnMarker3" type="Marker3D" parent="SpawnPoints" groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, 6.50804)
+
+[node name="AK47" parent="." instance=ExtResource("6_ryrav")]
+transform = Transform3D(-8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, -5.62059, 1.02867, 2.37007)
+
+[node name="House1" parent="." instance=ExtResource("7_eow3j")]
+transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, -2.93105, 0, -5.01579)
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn3v6ohgew767"]
+
+[ext_resource type="Script" uid="uid://dgepucr4vwtxq" path="res://items/guns/bullet.gd" id="1_o3k4g"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5x5th"]
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3k4g"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_o3k4g"]
+material = SubResource("StandardMaterial3D_o3k4g")
+radius = 0.2
+height = 0.4
+
+[node name="Bullet" type="Area3D"]
+script = ExtResource("1_o3k4g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5x5th")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_o3k4g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

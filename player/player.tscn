@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://cs6ai3ianfb7e"]
+
+[ext_resource type="Script" uid="uid://df223goa3j63j" path="res://player/player.gd" id="1_oul6g"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
+height = 1.5
+radial_segments = 6
+rings = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oul6g"]
+radius = 0.1
+height = 0.7
+radial_segments = 6
+rings = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
+radius = 0.6
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_mask = 5
+script = ExtResource("1_oul6g")
+
+[node name="PlayerBody" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242914, 0)
+mesh = SubResource("CapsuleMesh_kqu6x")
+
+[node name="LeftArm" type="MeshInstance3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.094, 0)
+mesh = SubResource("CapsuleMesh_oul6g")
+
+[node name="RightArm" type="MeshInstance3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.094, 0)
+mesh = SubResource("CapsuleMesh_oul6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rkbax")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
+shape = SubResource("CylinderShape3D_oul6g")
+
+[node name="WeaponAttachment" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.225, 0.41, -0.65)
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_exited"]
