@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dv4h3fy5r44a0"]
 
-[ext_resource type="Script" uid="uid://cepcmfp0nveyk" path="res://zombie.gd" id="1_uiaus"]
+[ext_resource type="Script" uid="uid://cepcmfp0nveyk" path="res://enemies/zombie.gd" id="1_uiaus"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_050lg"]
 albedo_color = Color(4.69275e-07, 0.393447, 6.257e-07, 1)

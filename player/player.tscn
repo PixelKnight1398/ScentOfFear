@@ -1,6 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs6ai3ianfb7e"]
+[gd_scene load_steps=9 format=3 uid="uid://cs6ai3ianfb7e"]
 
 [ext_resource type="Script" uid="uid://df223goa3j63j" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://ca2l2xcxrrj5w" path="res://utilities/BodyStatus.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://bwoh1mn74ocul" path="res://utilities/Equipment.gd" id="3_g1dw6"]
+[ext_resource type="Script" uid="uid://5j0dbrb2xr0" path="res://utilities/Inventory.gd" id="3_yw30f"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 height = 1.5
@@ -46,6 +49,15 @@ shape = SubResource("CylinderShape3D_oul6g")
 
 [node name="WeaponAttachment" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.225, 0.41, -0.65)
+
+[node name="BodyStatus" type="Node" parent="."]
+script = ExtResource("2_rkbax")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("3_yw30f")
+
+[node name="Equipment" type="Node" parent="."]
+script = ExtResource("3_g1dw6")
 
 [connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_entered"]
 [connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_exited"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bapwgu4fd3x6j"]
 
-[ext_resource type="Script" uid="uid://ddtcbxfy5s8tm" path="res://zombie_ragdoll.gd" id="1_ajr4j"]
+[ext_resource type="Script" uid="uid://ddtcbxfy5s8tm" path="res://enemies/zombie_ragdoll.gd" id="1_ajr4j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trmhv"]
 transparency = 1

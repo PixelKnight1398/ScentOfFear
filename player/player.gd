@@ -20,6 +20,12 @@ var weapon_scenes := {
 var current_weapon_instance: Node3D = null
 # A reference to our attachment point.
 @onready var weapon_attachment: Node3D = $WeaponAttachment
+@onready var equipment: Equipment = $Equipment
+@onready var inventory: Inventory = $Inventory
+
+func _ready() -> void:
+	# Connect the signal so the inventory always knows when equipment changes.
+	equipment.equipment_changed.connect(inventory._on_equipment_changed)
 
 var bullet_scene := preload("res://items/guns/bullet.tscn")
 
