@@ -71,6 +71,9 @@ mesh = SubResource("BoxMesh_ryrav")
 [node name="1911" parent="." instance=ExtResource("3_feb5d")]
 transform = Transform3D(-3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, 0, 0, 0.07, -5.72263, 1.04831, 4.3036)
 
+[node name="AK47" parent="." instance=ExtResource("6_ryrav")]
+transform = Transform3D(-8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, -5.62059, 1.02867, 2.37007)
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_fc0e3")
 
@@ -95,9 +98,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, -4.72738)
 
 [node name="SpawnMarker3" type="Marker3D" parent="SpawnPoints" groups=["spawn_points"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, 6.50804)
-
-[node name="AK47" parent="." instance=ExtResource("6_ryrav")]
-transform = Transform3D(-8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, -5.62059, 1.02867, 2.37007)
 
 [node name="House1" parent="." instance=ExtResource("7_eow3j")]
 transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, -2.93105, 0, -5.01579)

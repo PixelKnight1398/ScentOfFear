@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EquipmentData" load_steps=4 format=3 uid="uid://veadi0027ggd"]
+
+[ext_resource type="Script" uid="uid://d1nj8nwjreeaw" path="res://utilities/EquipmentData.gd" id="1_h8yym"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8yym"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4lfe2"]
+material = SubResource("StandardMaterial3D_h8yym")
+
+[resource]
+script = ExtResource("1_h8yym")
+valid_slots = Array[int]([1])
+inventory_slots_provided = 0
+item_name = "Armor Plate"
+world_mesh = SubResource("BoxMesh_4lfe2")
+metadata/_custom_type_script = "uid://d1nj8nwjreeaw"

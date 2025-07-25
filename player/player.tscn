@@ -59,5 +59,10 @@ script = ExtResource("3_yw30f")
 [node name="Equipment" type="Node" parent="."]
 script = ExtResource("3_g1dw6")
 
+[node name="LongInteractTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
 [connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_entered"]
 [connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_exited"]
+[connection signal="timeout" from="LongInteractTimer" to="." method="_long_interact_timer_timeout"]

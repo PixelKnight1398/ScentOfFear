@@ -45,7 +45,7 @@ func take_damage(damage: float, direction: Vector3, force: float) -> void:
 
 # In Zombie.gd
 
-var ragdoll_scene := preload("res://zombie_ragdoll.tscn")
+var ragdoll_scene := preload("res://enemies/zombie_ragdoll.tscn")
 
 func die(direction: Vector3, force: float) -> void:
 	# Create an instance of the ragdoll scene.

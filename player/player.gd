@@ -23,6 +23,9 @@ var current_weapon_instance: Node3D = null
 @onready var equipment: Equipment = $Equipment
 @onready var inventory: Inventory = $Inventory
 
+@onready var long_interact_timer: Timer = $LongInteractTimer
+var long_interact_complete := false
+
 func _ready() -> void:
 	# Connect the signal so the inventory always knows when equipment changes.
 	equipment.equipment_changed.connect(inventory._on_equipment_changed)
@@ -111,12 +114,27 @@ func _unhandled_input(event: InputEvent) -> void:
 		if current_weapon_instance:
 			shoot()
 			
-	# Check if the "interact" action was just pressed.
-	if event.is_action_pressed("interact") and not nearby_interactables.is_empty():
-		# Get the first item in the list (we could add logic to find the closest).
-		var item = nearby_interactables[0]
-		# Call the item's interact function, passing in the player node itself.
-		item.interact(self)
+	# When the interact button is first pressed, start the timer.
+	if event.is_action_pressed("interact"):
+		long_interact_complete = false
+		long_interact_timer.start()
+
+	# When the interact button is released...
+	if event.is_action_released("interact"):
+		# Stop the timer immediately.
+		long_interact_timer.stop()
+		
+		if long_interact_complete:
+			long_interact_complete = false
+		else:
+			# This is your QUICK interact logic (e.g., pick up item).
+			print("Short Press Detected!")
+			if not nearby_interactables.is_empty():
+				var item = nearby_interactables[0]
+				print(item.item_data)
+				if item.item_data:
+					self.pick_up(item.item_data)
+					item.queue_free()
 
 # --- Signal Functions for InteractionArea ---
 func _on_interaction_area_entered(area: Area3D) -> void:
@@ -133,27 +151,36 @@ func _on_interaction_area_exited(area: Area3D) -> void:
 		nearby_interactables.erase(area.get_parent())
 		print("Left range of: ", area.get_parent().name) # For debugging
 
-func equip_weapon(weapon_name: String):
+func _long_interact_timer_timeout():
+	long_interact_complete = true
+	
+	if not nearby_interactables.is_empty():
+		print("Long interact")
+		var item = nearby_interactables[0]
+		if item.item_data:
+			self.equip(item.item_data)
+			item.queue_free()
+
+func equip(item_data: ItemData):
 	# First, check if a weapon is already equipped and remove it.
 	if current_weapon_instance:
 		current_weapon_instance.queue_free()
 		current_weapon_instance = null
 
 	# Check if the weapon name exists in our dictionary.
-	if weapon_scenes.has(weapon_name):
-		# Get the scene from the dictionary.
-		var weapon_scene = weapon_scenes[weapon_name]
-		
-		# Create an instance of the weapon scene.
-		current_weapon_instance = weapon_scene.instantiate()
-		
+	if not item_data.scene_path.is_empty():
+		var new_weapon = load(item_data.scene_path)
+		current_weapon_instance = new_weapon.instantiate()
+		current_weapon_instance.on_equipped()
 		# Add the new weapon instance as a child of the attachment point.
 		# This will automatically position and rotate it with the player's hand.
 		weapon_attachment.add_child(current_weapon_instance)
 		
-		print("Instantiated and equipped the ", weapon_name)
 	else:
-		print("Error: Weapon type '", weapon_name, "' not found in dictionary.")
+		print("Couldn't find item data to equip")
+
+func pick_up(item_data: ItemData) -> void:
+	self.inventory.add_item(item_data)
 
 func shoot() -> void:
 	# First, make sure a weapon is actually equipped.

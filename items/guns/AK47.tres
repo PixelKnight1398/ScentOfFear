@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://b6ko72oom1ay1"]
+
+[ext_resource type="Script" uid="uid://b6gxk43a2tme6" path="res://utilities/WeaponData.gd" id="1_ljrro"]
+
+[resource]
+script = ExtResource("1_ljrro")
+damage = 10.0
+magazine_size = 15
+fire_rate = 0.5
+item_name = "AK47"
+scene_path = "uid://bsqojb3go42l3"
+metadata/_custom_type_script = "uid://b6gxk43a2tme6"

@@ -1,9 +1,6 @@
 # ItemData.gd
 class_name EquipmentData
-extends Resource
-
-## The name that will be displayed in the UI.
-@export var item_name: String = "Item"
+extends ItemData
 
 ## A list of valid slots this item can be equipped in.
 ## Leave empty if it's not an equippable item.
