@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1oj75hanrlce"]
+
+[ext_resource type="Script" uid="uid://drwakp0jo56nb" path="res://items/scripts/Apparel.gd" id="1_srfg0"]
+[ext_resource type="Resource" uid="uid://hr2w6snyedul" path="res://items/apparel/Backpack.tres" id="2_373np"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yvjwv"]
+top_radius = 0.2
+bottom_radius = 0.3
+height = 1.0
+radial_segments = 15
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_m3ruu"]
+
+[node name="Backpack" type="Node3D" groups=["interactables"]]
+script = ExtResource("1_srfg0")
+item_data = ExtResource("2_373np")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.74, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_yvjwv")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.53, 0, 0, 0, 1.53, 0, 0, 0, 1.53, 0, 0, 0)
+shape = SubResource("SphereShape3D_m3ruu")

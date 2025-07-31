@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EquipmentData" load_steps=2 format=3 uid="uid://hr2w6snyedul"]
+
+[ext_resource type="Script" uid="uid://d1nj8nwjreeaw" path="res://utilities/EquipmentData.gd" id="1_vvys8"]
+
+[resource]
+script = ExtResource("1_vvys8")
+valid_slots = Array[int]([])
+inventory_slots_provided = 20
+item_name = "Item"
+scene_path = "uid://b1oj75hanrlce"
+item_type = 1
+equipment_slot = 4
+secondary_equipment_slot = 0
+metadata/_custom_type_script = "uid://d1nj8nwjreeaw"

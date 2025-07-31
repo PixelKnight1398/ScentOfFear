@@ -8,14 +8,6 @@ extends CharacterBody3D
 # This array will keep track of all interactable items currently in range.
 var nearby_interactables := []
 
-# A dictionary to map weapon names to their scene files.
-# This makes it easy to add new weapons later.
-var weapon_scenes := {
-	"PISTOL_1911": preload("res://items/guns/1911.tscn"),
-	"RIFLE_AK47": preload("res://items/guns/AK47.tscn"),
-	# "shotgun": preload("res://shotgun.tscn"), # Example for later
-}
-
 # A variable to hold the currently equipped weapon's node instance.
 var current_weapon_instance: Node3D = null
 # A reference to our attachment point.
@@ -29,8 +21,6 @@ var long_interact_complete := false
 func _ready() -> void:
 	# Connect the signal so the inventory always knows when equipment changes.
 	equipment.equipment_changed.connect(inventory._on_equipment_changed)
-
-var bullet_scene := preload("res://items/guns/bullet.tscn")
 
 func _physics_process(delta: float) -> void:
 	# Store the vertical velocity from the previous frame.
@@ -110,9 +100,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	# First, check if the event that just happened was the "shoot" action being pressed.
 	# We also check the *current state* of the right mouse button to ensure we are aiming.
 	if event.is_action_pressed("shoot") and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		# A safeguard to make sure a weapon is actually equipped.
-		if current_weapon_instance:
-			shoot()
+		use_weapon()
+		
+	if event.is_action_pressed("reload"):
+		if current_weapon_instance and current_weapon_instance.has_method("reload"):
+			current_weapon_instance.reload()
 			
 	# When the interact button is first pressed, start the timer.
 	if event.is_action_pressed("interact"):
@@ -161,50 +153,55 @@ func _long_interact_timer_timeout():
 			self.equip(item.item_data)
 			item.queue_free()
 
+# This is now the main entry point for equipping any item.
 func equip(item_data: ItemData):
+	# Use a match statement to check the item's type.
+	match item_data.item_type:
+		ItemData.ItemType.WEAPON:
+			_equip_weapon(item_data)
+		ItemData.ItemType.APPAREL:
+			_equip_apparel(item_data)
+		_:
+			print("Cannot equip item of this type: ", item_data.item_name)
+
+
+# This function now handles ONLY instantiating weapon models.
+func _equip_weapon(weapon_data: ItemData):
 	# First, check if a weapon is already equipped and remove it.
 	if current_weapon_instance:
 		current_weapon_instance.queue_free()
 		current_weapon_instance = null
 
-	# Check if the weapon name exists in our dictionary.
-	if not item_data.scene_path.is_empty():
-		var new_weapon = load(item_data.scene_path)
-		current_weapon_instance = new_weapon.instantiate()
-		current_weapon_instance.on_equipped()
-		# Add the new weapon instance as a child of the attachment point.
-		# This will automatically position and rotate it with the player's hand.
+	# Check if the weapon has a scene to instance.
+	if weapon_data and weapon_data.scene_path:
+		var new_weapon_scene = load(weapon_data.scene_path)
+		current_weapon_instance = new_weapon_scene.instantiate()
+		
+		# Add the new weapon instance to the attachment point.
 		weapon_attachment.add_child(current_weapon_instance)
 		
+		# Tell the weapon it's been equipped so it can run its own setup.
+		if current_weapon_instance.has_method("on_equipped"):
+			current_weapon_instance.on_equipped(inventory)
 	else:
-		print("Couldn't find item data to equip")
+		print("Couldn't find scene path to equip weapon: ", weapon_data.item_name)
+
+
+# This new function handles ONLY apparel data.
+func _equip_apparel(apparel_data: ItemData):
+	# Simply tell the Equipment component to handle this item.
+	# The Equipment component will put the data in the correct slot.
+	equipment.equip_item(apparel_data, apparel_data.equipment_slot)
 
 func pick_up(item_data: ItemData) -> void:
 	self.inventory.add_item(item_data)
 
-func shoot() -> void:
+func use_weapon() -> void:
 	# First, make sure a weapon is actually equipped.
 	if not current_weapon_instance:
 		return
-
-	# Find the "Muzzle" node within the currently equipped weapon.
-	# The '%' character is a shortcut for finding a unique child node.
-	var muzzle: Marker3D = current_weapon_instance.get_node_or_null("Muzzle")
-	
-	# If we couldn't find a muzzle, don't try to shoot.
-	if not muzzle:
-		print("Error: No Muzzle node found on the equipped weapon.")
-		return
-
-	# Create an instance of our preloaded bullet scene.
-	var bullet = bullet_scene.instantiate()
-
-	# Add the bullet to the main game world.
-	get_tree().get_root().add_child(bullet)
-
-	# This is the key: Set the bullet's starting position and rotation
-	# to be the exact same as the muzzle's world position and rotation.
-	bullet.global_transform = muzzle.global_transform
+		
+	current_weapon_instance.action()
 
 func check_for_obstructing_walls() -> void:
 	if not camera:

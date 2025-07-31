@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://0xbnbhymfbad"]
+[gd_scene load_steps=5 format=3 uid="uid://0xbnbhymfbad"]
 
 [ext_resource type="PackedScene" uid="uid://dqloknyf04h7b" path="res://items/guns/1911.glb" id="1_s0x1l"]
-[ext_resource type="Script" uid="uid://b1nvpxe13i4rg" path="res://items/scripts/Weapon.gd" id="2_pfthp"]
+[ext_resource type="Script" uid="uid://cbr56d4a6oogg" path="res://items/scripts/RangedWeapon.gd" id="2_2aex5"]
+[ext_resource type="Resource" uid="uid://bs0qifgdoxrmf" path="res://items/guns/1911.tres" id="3_tdjar"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0x1l"]
 radius = 4.395
 
 [node name="1911" groups=["guns", "interactables"] instance=ExtResource("1_s0x1l")]
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
-script = ExtResource("2_pfthp")
+script = ExtResource("2_2aex5")
+item_data = ExtResource("3_tdjar")
 
 [node name="Area3D" type="Area3D" parent="." index="8" groups=["interactables"]]
 collision_layer = 3

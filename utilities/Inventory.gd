@@ -2,17 +2,18 @@
 class_name Inventory
 extends Node
 
-const ItemDataType = preload("res://utilities/ItemData.gd")
 
 @export var base_capacity: int = 10
 var current_capacity: int
-var items: Array[ItemDataType] = []
+var items: Array[ItemData] = []
+
+var ammo_count: int = 20
 
 func _ready() -> void:
 	current_capacity = base_capacity
 
 ## Adds an item to the inventory if there's space.
-func add_item(item: ItemDataType) -> bool:
+func add_item(item: ItemData) -> bool:
 	if items.size() < current_capacity:
 		items.append(item)
 		print("Added ", item.item_name, " to inventory.")
@@ -32,3 +33,21 @@ func _on_equipment_changed(current_equipment: Dictionary) -> void:
 	
 	current_capacity = new_capacity
 	print("Inventory capacity updated to: ", current_capacity)
+	
+## --- AMMO FUNCTIONS ---
+
+func get_ammo_count() -> int:
+	return ammo_count
+
+# Tries to remove ammo from the inventory and returns how much was actually taken.
+func use_ammo(amount: int) -> int:
+	var available_ammo = get_ammo_count()
+	var amount_to_take = min(available_ammo, amount)
+	
+	ammo_count -= amount_to_take
+	print("Used ", amount_to_take, " ammo.")
+	return amount_to_take
+
+func add_ammo(amount: int) -> void:
+	ammo_count += amount
+	print("Picked up ", amount, " ammo.")

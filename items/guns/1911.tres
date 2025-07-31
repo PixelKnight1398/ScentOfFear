@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RangedWeaponData" load_steps=2 format=3 uid="uid://bs0qifgdoxrmf"]
+
+[ext_resource type="Script" uid="uid://emsqxtclbsst" path="res://items/scripts/RangedWeaponData.gd" id="1_heula"]
+
+[resource]
+script = ExtResource("1_heula")
+magazine_size = 7
+fire_rate = 0.5
+damage = 10.0
+item_name = "Item"
+scene_path = "uid://0xbnbhymfbad"
+item_type = 0
+equipment_slot = 6
+secondary_equipment_slot = 5
+metadata/_custom_type_script = "uid://emsqxtclbsst"

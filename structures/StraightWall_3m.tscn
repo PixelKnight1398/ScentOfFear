@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c65j15n3msf5a"]
+
+[ext_resource type="PackedScene" uid="uid://brubq04bsptdu" path="res://structures/StraightWall_3m.glb" id="1_2xxnr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lirii"]
+size = Vector3(3.00269, 2.51031, 0.0999146)
+
+[node name="StraightWall_3m" type="StaticBody3D"]
+
+[node name="StraightWall_3mMesh" parent="." instance=ExtResource("1_2xxnr")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000854492, -0.00308228, -0.0507904)
+shape = SubResource("BoxShape3D_lirii")

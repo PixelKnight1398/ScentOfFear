@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5pvqbegju8ck"]
+
+[ext_resource type="PackedScene" uid="uid://bqtqosaa1rv2o" path="res://structures/Straight90Corner.glb" id="1_dvki7"]
+
+[node name="Straight90Corner" type="StaticBody3D"]
+
+[node name="Straight90CornerMesh" parent="." instance=ExtResource("1_dvki7")]

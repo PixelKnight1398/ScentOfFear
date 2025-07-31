@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://chfkgcp8karpe"]
+
+[ext_resource type="Script" uid="uid://drwakp0jo56nb" path="res://items/scripts/Apparel.gd" id="1_vemkk"]
+[ext_resource type="Resource" uid="uid://veadi0027ggd" path="res://items/apparel/ArmorPlate.tres" id="2_a0ig5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_33jin"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33jin"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_33jin"]
+material = SubResource("StandardMaterial3D_33jin")
+text = "Armor
+Plate"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_33jin"]
+size = Vector3(1, 1, 0.1)
+
+[node name="ArmorPlate" type="Node3D" groups=["interactables"]]
+script = ExtResource("1_vemkk")
+item_data = ExtResource("2_a0ig5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_33jin")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.493083)
+mesh = SubResource("TextMesh_33jin")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_33jin")
