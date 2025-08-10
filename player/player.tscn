@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://5j0dbrb2xr0" path="res://utilities/Inventory.gd" id="3_yw30f"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
-radius = 0.33
+radius = 0.25
 height = 1.37
 radial_segments = 6
 rings = 2
@@ -18,7 +18,7 @@ radial_segments = 6
 rings = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
-radius = 0.4
+radius = 0.3
 height = 1.8
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
@@ -33,11 +33,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028, 0)
 mesh = SubResource("CapsuleMesh_kqu6x")
 
 [node name="LeftArm" type="MeshInstance3D" parent="PlayerBody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.417914, -0.094, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.277975, -0.094, 0)
 mesh = SubResource("CapsuleMesh_oul6g")
 
 [node name="RightArm" type="MeshInstance3D" parent="PlayerBody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.423333, -0.094, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.293595, -0.094, 0)
 mesh = SubResource("CapsuleMesh_oul6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

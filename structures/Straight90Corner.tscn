@@ -5,3 +5,5 @@
 [node name="Straight90Corner" type="StaticBody3D"]
 
 [node name="Straight90CornerMesh" parent="." instance=ExtResource("1_dvki7")]
+
+[editable path="Straight90CornerMesh"]
