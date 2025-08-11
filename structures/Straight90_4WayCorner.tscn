@@ -1,0 +1,71 @@
+[gd_scene load_steps=15 format=3 uid="uid://dec4g8l2j8uom"]
+
+[ext_resource type="PackedScene" uid="uid://gopidkr47b3d" path="res://structures/Straight90_4WayCorner.glb" id="1_t7wev"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2cnii"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gvc4"]
+albedo_color = Color(1, 0.364706, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f0oh"]
+albedo_color = Color(0, 0.462745, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eejpy"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1afg5"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wy363"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uibck"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hra2h"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7j1r"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h3nbc"]
+albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t7wev"]
+size = Vector3(0.1, 2.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2cnii"]
+size = Vector3(0.45, 2.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gvc4"]
+size = Vector3(0.45, 2.5, 0.1)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Straight90_4WayCorner" parent="." instance=ExtResource("1_t7wev")]
+
+[node name="Plane" parent="Straight90_4WayCorner" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_2cnii")
+surface_material_override/1 = SubResource("StandardMaterial3D_8gvc4")
+surface_material_override/2 = SubResource("StandardMaterial3D_6f0oh")
+surface_material_override/3 = SubResource("StandardMaterial3D_eejpy")
+surface_material_override/4 = SubResource("StandardMaterial3D_1afg5")
+surface_material_override/5 = SubResource("StandardMaterial3D_wy363")
+surface_material_override/6 = SubResource("StandardMaterial3D_uibck")
+surface_material_override/7 = SubResource("StandardMaterial3D_hra2h")
+surface_material_override/8 = SubResource("StandardMaterial3D_g7j1r")
+surface_material_override/9 = SubResource("StandardMaterial3D_h3nbc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_t7wev")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.275085, 0, 0)
+shape = SubResource("BoxShape3D_2cnii")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.275189, 0, 0)
+shape = SubResource("BoxShape3D_8gvc4")
+
+[editable path="Straight90_4WayCorner"]

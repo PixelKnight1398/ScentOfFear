@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d2l2plx5ha352"]
+[gd_scene load_steps=8 format=3 uid="uid://d2l2plx5ha352"]
 
 [ext_resource type="PackedScene" uid="uid://b78uu0gap7f2w" path="res://structures/Straight90_3WayCorner.glb" id="1_rbjp3"]
 
@@ -14,14 +14,11 @@ albedo_color = Color(0, 0.462745, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go0he"]
 albedo_color = Color(0.334122, 0.334122, 0.334122, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwlgv"]
-albedo_color = Color(0, 0, 0, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_rbjp3"]
 size = Vector3(1, 2.49905, 0.101898)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x3jys"]
-size = Vector3(0.100861, 1, 0.450256)
+size = Vector3(0.100861, 2.49963, 0.450256)
 
 [node name="Straight903WayCorner" type="StaticBody3D"]
 
@@ -34,15 +31,15 @@ surface_material_override/2 = SubResource("StandardMaterial3D_l76o6")
 surface_material_override/3 = SubResource("StandardMaterial3D_go0he")
 surface_material_override/4 = SubResource("StandardMaterial3D_go0he")
 surface_material_override/5 = SubResource("StandardMaterial3D_go0he")
-surface_material_override/6 = SubResource("StandardMaterial3D_gwlgv")
-surface_material_override/7 = SubResource("StandardMaterial3D_gwlgv")
+surface_material_override/6 = SubResource("StandardMaterial3D_go0he")
+surface_material_override/7 = SubResource("StandardMaterial3D_go0he")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000408173, 0.000198364)
 shape = SubResource("BoxShape3D_rbjp3")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00050354, 0, 0.274872)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00050354, 0.000183105, 0.274872)
 shape = SubResource("BoxShape3D_x3jys")
 
 [editable path="Straight90_3WayCorner"]

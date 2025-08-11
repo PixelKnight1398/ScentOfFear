@@ -1,9 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5pvqbegju8ck"]
+[gd_scene load_steps=10 format=3 uid="uid://c5pvqbegju8ck"]
 
 [ext_resource type="PackedScene" uid="uid://bqtqosaa1rv2o" path="res://structures/Straight90Corner.glb" id="1_dvki7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dvki7"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vmag"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bg53g"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5cef"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llekn"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q56mn"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dvki7"]
+size = Vector3(0.600372, 2.49965, 0.0999603)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7vmag"]
+size = Vector3(0.100662, 2.49992, 0.499771)
 
 [node name="Straight90Corner" type="StaticBody3D"]
 
 [node name="Straight90CornerMesh" parent="." instance=ExtResource("1_dvki7")]
+
+[node name="Plane" parent="Straight90CornerMesh" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dvki7")
+surface_material_override/1 = SubResource("StandardMaterial3D_7vmag")
+surface_material_override/2 = SubResource("StandardMaterial3D_bg53g")
+surface_material_override/3 = SubResource("StandardMaterial3D_i5cef")
+surface_material_override/4 = SubResource("StandardMaterial3D_llekn")
+surface_material_override/5 = SubResource("StandardMaterial3D_q56mn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.250046, 2.28882e-05, 7.62939e-06)
+shape = SubResource("BoxShape3D_dvki7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000312805, -0.000267029, 0.300026)
+shape = SubResource("BoxShape3D_7vmag")
 
 [editable path="Straight90CornerMesh"]

@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://dqsjlkhf2pfrt"]
+
+[ext_resource type="PackedScene" uid="uid://c48t70101hrdl" path="res://structures/Straight90Corner_Skinny.glb" id="1_q2l5b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u163l"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5lm5"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mopex"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_otk8f"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxnma"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wspeb"]
+albedo_color = Color(0.366595, 0.366595, 0.366595, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6bjqk"]
+size = Vector3(0.349854, 2.50061, 0.0996094)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l1qqe"]
+size = Vector3(0.100006, 2.49953, 0.250366)
+
+[node name="Straight90CornerSkinny" type="StaticBody3D"]
+
+[node name="Straight90Corner_Skinny" parent="." instance=ExtResource("1_q2l5b")]
+
+[node name="Plane" parent="Straight90Corner_Skinny" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_u163l")
+surface_material_override/1 = SubResource("StandardMaterial3D_w5lm5")
+surface_material_override/2 = SubResource("StandardMaterial3D_mopex")
+surface_material_override/3 = SubResource("StandardMaterial3D_otk8f")
+surface_material_override/4 = SubResource("StandardMaterial3D_kxnma")
+surface_material_override/5 = SubResource("StandardMaterial3D_wspeb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.125039, -0.000183105, -0.000244141)
+shape = SubResource("BoxShape3D_6bjqk")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000259399, 0.000328064, 0.175232)
+shape = SubResource("BoxShape3D_l1qqe")
+
+[editable path="Straight90Corner_Skinny"]
