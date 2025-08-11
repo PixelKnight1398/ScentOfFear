@@ -1,0 +1,67 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2lwe8dm6o4f7"]
+
+[ext_resource type="PackedScene" uid="uid://pp28vlajfcxi" path="res://structures/StraightWall_MedWindow_2m.glb" id="1_aw5pm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ukwgv"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnud0"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ba5sp"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hheke"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njf2p"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnta0"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tod06"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_msc5x"]
+size = Vector3(0.5, 2.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lx1jk"]
+size = Vector3(0.5, 2.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bei03"]
+size = Vector3(1, 0.75, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kak7n"]
+size = Vector3(1, 0.55, 0.1)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="StraightWall_MedWindow_2m" parent="." instance=ExtResource("1_aw5pm")]
+
+[node name="Plane" parent="StraightWall_MedWindow_2m" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ukwgv")
+surface_material_override/1 = SubResource("StandardMaterial3D_bnud0")
+surface_material_override/2 = SubResource("StandardMaterial3D_ba5sp")
+surface_material_override/3 = SubResource("StandardMaterial3D_hheke")
+surface_material_override/4 = SubResource("StandardMaterial3D_njf2p")
+surface_material_override/5 = SubResource("StandardMaterial3D_cnta0")
+surface_material_override/6 = SubResource("StandardMaterial3D_tod06")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.749847, -0.000366211, 0)
+shape = SubResource("BoxShape3D_msc5x")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75029, -8.7738e-05, 0)
+shape = SubResource("BoxShape3D_lx1jk")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.874786, 0)
+shape = SubResource("BoxShape3D_bei03")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974648, 0)
+shape = SubResource("BoxShape3D_kak7n")
+
+[editable path="StraightWall_MedWindow_2m"]

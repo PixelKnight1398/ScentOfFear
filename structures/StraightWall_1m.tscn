@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfv2gc4io8km3"]
+
+[ext_resource type="PackedScene" uid="uid://c4hrl4lmg7ba" path="res://structures/StraightWall_1m.glb" id="1_eu8qh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t3e75"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nsp50"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j0n5n"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eo4jx"]
+size = Vector3(1, 2.5, 0.1)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="StraightWall_1m" parent="." instance=ExtResource("1_eu8qh")]
+
+[node name="Plane" parent="StraightWall_1m" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_t3e75")
+surface_material_override/1 = SubResource("StandardMaterial3D_nsp50")
+surface_material_override/2 = SubResource("StandardMaterial3D_j0n5n")
+surface_material_override/3 = SubResource("StandardMaterial3D_j0n5n")
+surface_material_override/4 = SubResource("StandardMaterial3D_j0n5n")
+surface_material_override/5 = SubResource("StandardMaterial3D_j0n5n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_eo4jx")
+
+[editable path="StraightWall_1m"]

@@ -1,6 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://c65j15n3msf5a"]
+[gd_scene load_steps=9 format=3 uid="uid://c65j15n3msf5a"]
 
 [ext_resource type="PackedScene" uid="uid://brubq04bsptdu" path="res://structures/StraightWall_3m.glb" id="1_2xxnr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xxnr"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lirii"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vwfj"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gtgm2"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibdjv"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nr7no"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lirii"]
 size = Vector3(3.00269, 2.51031, 0.0999146)
@@ -9,6 +27,15 @@ size = Vector3(3.00269, 2.51031, 0.0999146)
 
 [node name="StraightWall_3mMesh" parent="." instance=ExtResource("1_2xxnr")]
 
+[node name="Plane" parent="StraightWall_3mMesh" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_2xxnr")
+surface_material_override/1 = SubResource("StandardMaterial3D_lirii")
+surface_material_override/2 = SubResource("StandardMaterial3D_3vwfj")
+surface_material_override/3 = SubResource("StandardMaterial3D_gtgm2")
+surface_material_override/4 = SubResource("StandardMaterial3D_ibdjv")
+surface_material_override/5 = SubResource("StandardMaterial3D_nr7no")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000854492, -0.00308228, -0.0507904)
 shape = SubResource("BoxShape3D_lirii")
+
+[editable path="StraightWall_3mMesh"]

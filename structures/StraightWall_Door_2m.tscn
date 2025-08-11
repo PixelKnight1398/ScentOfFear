@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://d06ttd4yd3wf"]
+
+[ext_resource type="PackedScene" uid="uid://coqko12t4ne0w" path="res://structures/StraightWall_Door_2m.glb" id="1_oomeu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yog4j"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_st82k"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08h15"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yj6i8"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_np47q"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ffnw"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxngt"]
+albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_16ast"]
+size = Vector3(2, 0.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_odw1a"]
+size = Vector3(0.55, 2, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_shyy6"]
+size = Vector3(0.55, 2, 0.1)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="StraightWall_Door_2m" parent="." instance=ExtResource("1_oomeu")]
+
+[node name="Plane" parent="StraightWall_Door_2m" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_yog4j")
+surface_material_override/1 = SubResource("StandardMaterial3D_st82k")
+surface_material_override/2 = SubResource("StandardMaterial3D_08h15")
+surface_material_override/3 = SubResource("StandardMaterial3D_yj6i8")
+surface_material_override/4 = SubResource("StandardMaterial3D_np47q")
+surface_material_override/5 = SubResource("StandardMaterial3D_0ffnw")
+surface_material_override/6 = SubResource("StandardMaterial3D_mxngt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00084, 0)
+shape = SubResource("BoxShape3D_16ast")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.725396, -0.250153, 0)
+shape = SubResource("BoxShape3D_odw1a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.724967, -0.249628, 0)
+shape = SubResource("BoxShape3D_shyy6")
+
+[editable path="StraightWall_Door_2m"]
