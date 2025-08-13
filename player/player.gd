@@ -208,21 +208,21 @@ func check_for_obstructing_walls() -> void:
 		return
 
 	var space_state := get_world_3d().direct_space_state
-	var player_pos := global_position + Vector3(0, 1, 0) # Raycast from center of player
+	var player_pos := global_position
 	var camera_pos := camera.global_position
 
-	# Create a query that starts at the camera and ends at the player.
 	var query := PhysicsRayQueryParameters3D.create(camera_pos, player_pos)
-	# IMPORTANT: Set the mask to ONLY check for things on the "walls" layer.
-	query.collision_mask = 1 << 2 # This assumes your "walls" are on Physics Layer 3.
-								 # Use 1 << 3 for Layer 4, 1 << 4 for Layer 5, etc.
+	query.collision_mask = 1 << 2 # Assumes "walls" are on Physics Layer 3
+	query.exclude = [self]
 
-	# Perform the raycast.
 	var result := space_state.intersect_ray(query)
 
-	# If the ray hit a wall...
 	if result:
-		var wall = result.collider
-		# Check if the wall has our fade script and call the function.
-		if wall.has_method("fade_out"):
-			wall.fade_out()
+		# Get the individual wall piece that was hit.
+		var wall_piece = result.collider
+		# Get its parent, which is the wall section controller.
+		var wall_section = wall_piece.get_parent()
+
+		# Call the fade_out function on the parent controller.
+		if wall_section and wall_section.has_method("fade_out"):
+			wall_section.fade_out()

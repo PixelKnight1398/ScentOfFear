@@ -1,0 +1,292 @@
+[gd_scene load_steps=18 format=3 uid="uid://dulutr53iilk6"]
+
+[ext_resource type="Script" uid="uid://cgy3uqlaj05h2" path="res://structures/scripts/StructureController.gd" id="1_1p3bm"]
+[ext_resource type="PackedScene" uid="uid://llsbbawrotdu" path="res://structures/Gable1.tscn" id="1_vwae5"]
+[ext_resource type="PackedScene" uid="uid://v3fnasqbx6go" path="res://structures/Roof1.tscn" id="2_6ti3g"]
+[ext_resource type="PackedScene" uid="uid://cl85t56yh14sa" path="res://structures/FloorBlock_0-5x3x3.tscn" id="3_1p3bm"]
+[ext_resource type="PackedScene" uid="uid://bwcg85asuwxux" path="res://structures/FloorBlock_0-5x1x3.tscn" id="4_6wgmw"]
+[ext_resource type="PackedScene" uid="uid://c48unda8h81lg" path="res://structures/FloorBlock_0-5x1x1.tscn" id="5_7k0mn"]
+[ext_resource type="PackedScene" uid="uid://xt03rs378e1o" path="res://structures/Ramp1.tscn" id="6_6d2qr"]
+[ext_resource type="PackedScene" uid="uid://dqsjlkhf2pfrt" path="res://structures/Straight90Corner_Skinny.tscn" id="7_7asbb"]
+[ext_resource type="Script" uid="uid://bb27u5nvqket4" path="res://structures/scripts/FadeController.gd" id="8_l3hq2"]
+[ext_resource type="PackedScene" uid="uid://c65j15n3msf5a" path="res://structures/StraightWall_3m.tscn" id="9_30m2w"]
+[ext_resource type="PackedScene" uid="uid://cs48mv2lwd0n6" path="res://structures/StraightWall_Door_3m.tscn" id="10_4jj1g"]
+[ext_resource type="PackedScene" uid="uid://cha6sgwktm1b2" path="res://structures/StraightWall_MedWindow_3m.tscn" id="11_iw661"]
+[ext_resource type="Script" uid="uid://d4e07chkhqw2w" path="res://structures/FloorTrigger.gd" id="12_u5he7"]
+[ext_resource type="PackedScene" uid="uid://dcbdjvlipug8r" path="res://structures/Stairs1.glb" id="13_6ti3g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ulevo"]
+size = Vector3(6.5, 2.5, 6.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_6ti3g"]
+data = PackedVector3Array(-1, 1, 0.5, 1, 0, -0.5, 1, 0, 0.5, -1, 1, 0.5, -1, 1, -0.5, 1, 0, -0.5, -1, 1, 0.5, -2, 1, -0.5, -1, 1, -0.5, -1, 1, 0.5, -2, 1, 0.5, -2, 1, -0.5, -1, 1, 0.5, -2, 2.5, 3, -2, 1, 0.5, -1, 1, 0.5, -1, 2.5, 3, -2, 2.5, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ti3g"]
+size = Vector3(1, 0.1, 1)
+
+[node name="Node3D" type="StaticBody3D" node_paths=PackedStringArray("floor_levels")]
+script = ExtResource("1_1p3bm")
+floor_levels = [NodePath("FirstFloor"), NodePath("SecondFloor"), NodePath("Roof")]
+
+[node name="FirstFloor" type="Node3D" parent="."]
+
+[node name="Floors" type="Node3D" parent="FirstFloor"]
+auto_translate_mode = 2
+
+[node name="StaticBody3D" parent="FirstFloor/Floors" instance=ExtResource("3_1p3bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, -0.5)
+
+[node name="StaticBody3D2" parent="FirstFloor/Floors" instance=ExtResource("3_1p3bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 2.5)
+
+[node name="StaticBody3D3" parent="FirstFloor/Floors" instance=ExtResource("3_1p3bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, -0.5)
+
+[node name="StaticBody3D4" parent="FirstFloor/Floors" instance=ExtResource("3_1p3bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 2.5)
+
+[node name="FloorBlock1x3" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.75, 0, 2.5)
+
+[node name="FloorBlock1x4" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.75, 0, -0.5)
+
+[node name="FloorBlock1x1" parent="FirstFloor/Floors" instance=ExtResource("5_7k0mn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, 0, 4.5)
+
+[node name="FloorBlock1x5" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 4.5)
+
+[node name="FloorBlock1x6" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 4.5)
+
+[node name="FloorBlock1x2" parent="FirstFloor/Floors" instance=ExtResource("5_7k0mn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, 4.5)
+
+[node name="FloorBlock1x7" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.25, 0, 2.5)
+
+[node name="FloorBlock1x8" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.25, 0, -0.5)
+
+[node name="FloorBlock1x9" parent="FirstFloor/Floors" instance=ExtResource("5_7k0mn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, -2.5)
+
+[node name="FloorBlock1x10" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, -2.5)
+
+[node name="FloorBlock1x11" parent="FirstFloor/Floors" instance=ExtResource("4_6wgmw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, -2.5)
+
+[node name="FloorBlock1x12" parent="FirstFloor/Floors" instance=ExtResource("5_7k0mn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, 0, -2.5)
+
+[node name="StaticBody3D5" parent="FirstFloor/Floors" instance=ExtResource("6_6d2qr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 5.5)
+
+[node name="Straight90CornerSkinny" parent="FirstFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 1.5, 4)
+
+[node name="Straight90CornerSkinny2" parent="FirstFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.5, -2.5)
+
+[node name="Straight90CornerSkinny3" parent="FirstFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 1.5, -2.5)
+
+[node name="Straight90CornerSkinny4" parent="FirstFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 1.5, 4)
+
+[node name="Wall" type="Node3D" parent="FirstFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StraightWall_3m3" parent="FirstFloor/Wall" instance=ExtResource("9_30m2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.5, 4)
+
+[node name="StaticBody3D" parent="FirstFloor/Wall" instance=ExtResource("10_4jj1g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 1.5, 4)
+
+[node name="FadeTimer" type="Timer" parent="FirstFloor/Wall"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall2" type="Node3D" parent="FirstFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StraightWall_3m" parent="FirstFloor/Wall2" instance=ExtResource("9_30m2w")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.5, 1.5, 2.25)
+
+[node name="StaticBody3D3" parent="FirstFloor/Wall2" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.5, 1.5, -0.75)
+
+[node name="FadeTimer" type="Timer" parent="FirstFloor/Wall2"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall3" type="Node3D" parent="FirstFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StaticBody3D4" parent="FirstFloor/Wall3" instance=ExtResource("11_iw661")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 1.5, -2.5)
+
+[node name="StraightWall_3m2" parent="FirstFloor/Wall3" instance=ExtResource("9_30m2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.5, -2.5)
+
+[node name="FadeTimer" type="Timer" parent="FirstFloor/Wall3"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall4" type="Node3D" parent="FirstFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StaticBody3D5" parent="FirstFloor/Wall4" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 1.5, -0.75)
+
+[node name="StaticBody3D6" parent="FirstFloor/Wall4" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 1.5, 2.25)
+
+[node name="FadeTimer" type="Timer" parent="FirstFloor/Wall4"]
+wait_time = 0.2
+one_shot = true
+
+[node name="FirstFloorArea" type="Area3D" parent="FirstFloor" node_paths=PackedStringArray("upper_floors")]
+script = ExtResource("12_u5he7")
+upper_floors = [NodePath("../../SecondFloor"), NodePath("../../Roof")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/FirstFloorArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 1.5, 0.75)
+shape = SubResource("BoxShape3D_ulevo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="FirstFloor"]
+
+[node name="Stairs1" parent="FirstFloor/StaticBody3D" instance=ExtResource("13_6ti3g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.25, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.25, -2)
+shape = SubResource("ConcavePolygonShape3D_6ti3g")
+
+[node name="SecondFloor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Floors" type="Node3D" parent="SecondFloor"]
+auto_translate_mode = 2
+
+[node name="Roof2" parent="SecondFloor/Floors" instance=ExtResource("2_6ti3g")]
+transform = Transform3D(6.5, 0, 0, 0, 1, 0, 0, 0, 3, 1.25, 0.2, 2.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecondFloor/Floors/Roof2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000127316, 0)
+shape = SubResource("BoxShape3D_6ti3g")
+
+[node name="Straight90CornerSkinny" parent="SecondFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 1.5, 4)
+
+[node name="Straight90CornerSkinny2" parent="SecondFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.5, -2.5)
+
+[node name="Straight90CornerSkinny3" parent="SecondFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 1.5, -2.5)
+
+[node name="Straight90CornerSkinny4" parent="SecondFloor" instance=ExtResource("7_7asbb")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 1.5, 4)
+
+[node name="Wall" type="Node3D" parent="SecondFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StraightWall_3m3" parent="SecondFloor/Wall" instance=ExtResource("9_30m2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.5, 4)
+
+[node name="StaticBody3D" parent="SecondFloor/Wall" instance=ExtResource("11_iw661")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 1.5, 4)
+
+[node name="FadeTimer" type="Timer" parent="SecondFloor/Wall"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall2" type="Node3D" parent="SecondFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StraightWall_3m" parent="SecondFloor/Wall2" instance=ExtResource("9_30m2w")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.5, 1.5, 2.25)
+
+[node name="SecondFloorArea" type="Area3D" parent="SecondFloor/Wall2/StraightWall_3m" node_paths=PackedStringArray("upper_floors")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.25, -1.5, -4.5)
+script = ExtResource("12_u5he7")
+upper_floors = [NodePath("../../../../Roof")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecondFloor/Wall2/StraightWall_3m/SecondFloorArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 1.5, 0.75)
+shape = SubResource("BoxShape3D_ulevo")
+
+[node name="StaticBody3D3" parent="SecondFloor/Wall2" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.5, 1.5, -0.75)
+
+[node name="FadeTimer" type="Timer" parent="SecondFloor/Wall2"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall3" type="Node3D" parent="SecondFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StaticBody3D4" parent="SecondFloor/Wall3" instance=ExtResource("11_iw661")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 1.5, -2.5)
+
+[node name="StraightWall_3m2" parent="SecondFloor/Wall3" instance=ExtResource("9_30m2w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.5, -2.5)
+
+[node name="FadeTimer" type="Timer" parent="SecondFloor/Wall3"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Wall4" type="Node3D" parent="SecondFloor"]
+script = ExtResource("8_l3hq2")
+
+[node name="StaticBody3D5" parent="SecondFloor/Wall4" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 1.5, -0.75)
+
+[node name="StaticBody3D6" parent="SecondFloor/Wall4" instance=ExtResource("11_iw661")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 1.5, 2.25)
+
+[node name="FadeTimer" type="Timer" parent="SecondFloor/Wall4"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Roof" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Gable" parent="Roof" instance=ExtResource("1_vwae5")]
+transform = Transform3D(6.6, 0, 0, 0, 2, 0, 0, 0, 1, 1.25, 3.75, 4)
+
+[node name="Gable2" parent="Roof" instance=ExtResource("1_vwae5")]
+transform = Transform3D(6.6, 0, 0, 0, 2, 0, 0, 0, 1, 1.25, 3.75, -2.5)
+
+[node name="Roof" parent="Roof" instance=ExtResource("2_6ti3g")]
+transform = Transform3D(-3.53467, -0.523986, 1.05697e-06, -2.17454, 0.851727, -2.97852e-14, -5.3372e-07, -7.91197e-08, -7, -0.5, 3.75, 0.75)
+
+[node name="Roof2" parent="Roof" instance=ExtResource("2_6ti3g")]
+transform = Transform3D(3.53467, 0.523986, -1.66893e-06, -2.17454, 0.851727, -1.89224e-13, 8.4273e-07, 1.24928e-07, 7, 3, 3.75, 0.75)
+
+[connection signal="timeout" from="FirstFloor/Wall/FadeTimer" to="FirstFloor/Wall" method="_on_timer_timeout"]
+[connection signal="timeout" from="FirstFloor/Wall2/FadeTimer" to="FirstFloor/Wall2" method="_on_timer_timeout"]
+[connection signal="timeout" from="FirstFloor/Wall3/FadeTimer" to="FirstFloor/Wall3" method="_on_timer_timeout"]
+[connection signal="timeout" from="FirstFloor/Wall4/FadeTimer" to="FirstFloor/Wall4" method="_on_timer_timeout"]
+[connection signal="body_entered" from="FirstFloor/FirstFloorArea" to="." method="_on_player_entered_floor" binds= [0]]
+[connection signal="body_exited" from="FirstFloor/FirstFloorArea" to="." method="_on_player_exited_floor" binds= [0]]
+[connection signal="timeout" from="SecondFloor/Wall/FadeTimer" to="SecondFloor/Wall" method="_on_timer_timeout"]
+[connection signal="body_entered" from="SecondFloor/Wall2/StraightWall_3m/SecondFloorArea" to="." method="_on_player_entered_floor" binds= [1]]
+[connection signal="body_exited" from="SecondFloor/Wall2/StraightWall_3m/SecondFloorArea" to="." method="_on_player_exited_floor" binds= [1]]
+[connection signal="timeout" from="SecondFloor/Wall2/FadeTimer" to="SecondFloor/Wall2" method="_on_timer_timeout"]
+[connection signal="timeout" from="SecondFloor/Wall3/FadeTimer" to="SecondFloor/Wall3" method="_on_timer_timeout"]
+[connection signal="timeout" from="SecondFloor/Wall4/FadeTimer" to="SecondFloor/Wall4" method="_on_timer_timeout"]
+
+[editable path="FirstFloor/StaticBody3D/Stairs1"]
+[editable path="SecondFloor/Floors/Roof2"]
+[editable path="SecondFloor/Floors/Roof2/Roof1"]
+[editable path="Roof/Gable"]
+[editable path="Roof/Gable/Gable1"]
+[editable path="Roof/Gable2"]
+[editable path="Roof/Gable2/Gable1"]
+[editable path="Roof/Roof"]
+[editable path="Roof/Roof/Roof1"]
+[editable path="Roof/Roof2"]
+[editable path="Roof/Roof2/Roof1"]

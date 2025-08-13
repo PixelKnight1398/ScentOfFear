@@ -1,14 +1,32 @@
-[gd_scene load_steps=19 format=3 uid="uid://uu3m28um53xv"]
+[gd_scene load_steps=23 format=3 uid="uid://uu3m28um53xv"]
 
 [ext_resource type="Script" uid="uid://dwy7k8j4m1mrl" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://cs6ai3ianfb7e" path="res://player/player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://daxk4ehvqy6rn" path="res://utilities/IndependentCamera.gd" id="2_e2o6t"]
 [ext_resource type="PackedScene" uid="uid://0xbnbhymfbad" path="res://items/guns/1911.tscn" id="3_feb5d"]
+[ext_resource type="Script" uid="uid://b17ner7ftb7mt" path="res://SunController.gd" id="3_mfdv2"]
 [ext_resource type="PackedScene" uid="uid://dv4h3fy5r44a0" path="res://enemies/zombie.tscn" id="4_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bsqojb3go42l3" path="res://items/guns/AK47.tscn" id="6_ryrav"]
 [ext_resource type="PackedScene" uid="uid://chfkgcp8karpe" path="res://items/apparel/ArmorPlate.tscn" id="8_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://doc24j7d8c8i" path="res://structures/TestHouse1.tscn" id="9_hve3p"]
 [ext_resource type="PackedScene" uid="uid://b1oj75hanrlce" path="res://items/apparel/Backpack.tscn" id="9_vef74"]
+[ext_resource type="PackedScene" uid="uid://dulutr53iilk6" path="res://structures/TestHouse1_2Story.tscn" id="10_hve3p"]
+
+[sub_resource type="Gradient" id="Gradient_mfdv2"]
+offsets = PackedFloat32Array(0.021645, 0.134199, 0.489177, 0.848485, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.847059, 0.564706, 0.290196, 1, 0.0790719, 0.384895, 0.892178, 1, 0.847059, 0.564706, 0.290196, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iotsf"]
+gradient = SubResource("Gradient_mfdv2")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eow3j"]
+
+[sub_resource type="Sky" id="Sky_eow3j"]
+sky_material = SubResource("ProceduralSkyMaterial_eow3j")
+
+[sub_resource type="Environment" id="Environment_eow3j"]
+background_mode = 2
+sky = SubResource("Sky_eow3j")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7jktm"]
 size = Vector3(1, 1, 3.445)
@@ -30,19 +48,23 @@ size = Vector3(20, 0.2, 20)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fc0e3"]
 size = Vector3(42.6455, 0.2, 40)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eow3j"]
-
-[sub_resource type="Sky" id="Sky_eow3j"]
-sky_material = SubResource("ProceduralSkyMaterial_eow3j")
-
-[sub_resource type="Environment" id="Environment_eow3j"]
-background_mode = 2
-sky = SubResource("Sky_eow3j")
-
 [node name="Game" type="Node3D" node_paths=PackedStringArray("spawn_points_container")]
 script = ExtResource("1_7jktm")
 spawn_points_container = NodePath("SpawnPoints")
 zombie_scene = ExtResource("4_fc0e3")
+
+[node name="SunPivot" type="Node3D" parent="." node_paths=PackedStringArray("world_environment")]
+transform = Transform3D(0.983754, 0, 0.179523, 0, 1, 0, -0.179523, 0, 0.983754, 0, 20, 0)
+script = ExtResource("3_mfdv2")
+sky_colors = SubResource("GradientTexture1D_iotsf")
+world_environment = NodePath("../WorldEnvironment")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SunPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 50, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eow3j")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_80nbo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.666204, 1.20052, 5.53369)
@@ -53,9 +75,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5815, 4.52435)
 script = ExtResource("2_e2o6t")
 target = NodePath("../Player")
 max_zoom = 10.0
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.40365, -0.910044, 0.0942736, 0.2658, 0.21524, 0.939693, -0.875453, -0.354249, 0.328771, 0, 6.3415, 0)
 
 [node name="Table" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69789, 0.5, 6.50585)
@@ -101,9 +120,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, -4.72738)
 [node name="SpawnMarker3" type="Marker3D" parent="SpawnPoints" groups=["spawn_points"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.537, 1, 6.50804)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_eow3j")
-
 [node name="ArmorPlate" parent="." instance=ExtResource("8_j5wjh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 3)
 
@@ -111,6 +127,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 3)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0346, 1.2175, 4.72397)
 
 [node name="Node3D" parent="." instance=ExtResource("9_hve3p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86962, 0.35, -7.20828)
+transform = Transform3D(0.815815, 0, 0.578313, 0, 1, 0, -0.578313, 0, 0.815815, -8.65986, 0.35, -7.20828)
+
+[node name="Node3D2" parent="." instance=ExtResource("10_hve3p")]
+transform = Transform3D(0.554699, 0, -0.832051, 0, 1, 0, 0.832051, 0, 0.554699, 7.83734, 0.25, -7.25)
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

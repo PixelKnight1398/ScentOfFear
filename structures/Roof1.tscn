@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://v3fnasqbx6go"]
+
+[ext_resource type="PackedScene" uid="uid://diu8tge37irsh" path="res://structures/Roof1.glb" id="1_67dq8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_se518"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3je5c"]
+
+[node name="Roof" type="StaticBody3D"]
+
+[node name="Roof1" parent="." instance=ExtResource("1_67dq8")]
+
+[node name="Plane" parent="Roof1" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_se518")
+surface_material_override/1 = SubResource("StandardMaterial3D_3je5c")
+
+[editable path="Roof1"]

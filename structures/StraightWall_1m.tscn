@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfv2gc4io8km3"]
+[gd_scene load_steps=7 format=3 uid="uid://bfv2gc4io8km3"]
 
 [ext_resource type="PackedScene" uid="uid://c4hrl4lmg7ba" path="res://structures/StraightWall_1m.glb" id="1_eu8qh"]
+[ext_resource type="Script" uid="uid://waoopjg340vt" path="res://structures/scripts/Fadeable.gd" id="1_t3e75"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t3e75"]
 albedo_color = Color(0, 1, 1, 1)
@@ -14,7 +15,10 @@ albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_eo4jx"]
 size = Vector3(1, 2.5, 0.1)
 
-[node name="StaticBody3D" type="StaticBody3D"]
+[node name="StaticBody3D" type="StaticBody3D" node_paths=PackedStringArray("mesh_instance")]
+collision_layer = 4
+script = ExtResource("1_t3e75")
+mesh_instance = NodePath("StraightWall_1m/Plane")
 
 [node name="StraightWall_1m" parent="." instance=ExtResource("1_eu8qh")]
 

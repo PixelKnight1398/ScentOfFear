@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://llsbbawrotdu"]
+
+[ext_resource type="PackedScene" uid="uid://fl6ebvmmtwqx" path="res://structures/Gable1.glb" id="1_qltqi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h64y5"]
+albedo_color = Color(2.14182e-06, 0.56847, 7.70092e-07, 1)
+
+[node name="Gable" type="StaticBody3D"]
+
+[node name="Gable1" parent="." instance=ExtResource("1_qltqi")]
+
+[node name="Plane" parent="Gable1" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_h64y5")
+
+[editable path="Gable1"]

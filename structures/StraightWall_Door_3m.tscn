@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs48mv2lwd0n6"]
+[gd_scene load_steps=9 format=3 uid="uid://cs48mv2lwd0n6"]
 
+[ext_resource type="Script" uid="uid://waoopjg340vt" path="res://structures/scripts/Fadeable.gd" id="1_0s7ad"]
 [ext_resource type="PackedScene" uid="uid://bt76btcs0ejr4" path="res://structures/StraightWall_Door_3m.glb" id="1_f6i53"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0s7ad"]
@@ -20,7 +21,10 @@ size = Vector3(1.0399, 1.99902, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_wydxa"]
 size = Vector3(1.04, 1.999, 0.1)
 
-[node name="StaticBody3D" type="StaticBody3D"]
+[node name="StaticBody3D" type="StaticBody3D" node_paths=PackedStringArray("mesh_instance")]
+collision_layer = 4
+script = ExtResource("1_0s7ad")
+mesh_instance = NodePath("StraightWall_Door_3m/Plane")
 
 [node name="StraightWall_Door_3m" parent="." instance=ExtResource("1_f6i53")]
 
