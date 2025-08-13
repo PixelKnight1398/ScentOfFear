@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://uu3m28um53xv"]
+[gd_scene load_steps=19 format=3 uid="uid://uu3m28um53xv"]
 
 [ext_resource type="Script" uid="uid://dwy7k8j4m1mrl" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="PackedScene" uid="uid://cs6ai3ianfb7e" path="res://player/player.tscn" id="1_80nbo"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dv4h3fy5r44a0" path="res://enemies/zombie.tscn" id="4_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bsqojb3go42l3" path="res://items/guns/AK47.tscn" id="6_ryrav"]
 [ext_resource type="PackedScene" uid="uid://chfkgcp8karpe" path="res://items/apparel/ArmorPlate.tscn" id="8_j5wjh"]
+[ext_resource type="PackedScene" uid="uid://doc24j7d8c8i" path="res://structures/TestHouse1.tscn" id="9_hve3p"]
 [ext_resource type="PackedScene" uid="uid://b1oj75hanrlce" path="res://items/apparel/Backpack.tscn" id="9_vef74"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7jktm"]
@@ -108,5 +109,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 3)
 
 [node name="Backpack" parent="." instance=ExtResource("9_vef74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0346, 1.2175, 4.72397)
+
+[node name="Node3D" parent="." instance=ExtResource("9_hve3p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86962, 0.35, -7.20828)
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

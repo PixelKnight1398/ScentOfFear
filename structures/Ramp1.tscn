@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://xt03rs378e1o"]
+
+[ext_resource type="PackedScene" uid="uid://h8h85lucumcn" path="res://structures/Ramp1.glb" id="1_eb70v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4d35w"]
+albedo_color = Color(0.272655, 0.272655, 0.272655, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fri14"]
+data = PackedVector3Array(-1, -0.25, -0.375, 1, 0.25, -0.375, -1, 0.25, -0.375, -1, -0.25, -0.375, 1, -0.25, -0.375, 1, 0.25, -0.375, -1, -0.25, 0.375, -1, -0.25, -0.375, -1, 0.25, -0.375, -1, -0.25, -0.375, 1, -0.25, 0.375, 1, -0.25, -0.375, -1, -0.25, -0.375, -1, -0.25, 0.375, 1, -0.25, 0.375, 1, -0.25, -0.375, 1, -0.25, 0.375, 1, 0.25, -0.375, 1, 0.25, -0.375, -1, -0.25, 0.375, -1, 0.25, -0.375, 1, 0.25, -0.375, 1, -0.25, 0.375, -1, -0.25, 0.375)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Ramp1" parent="." instance=ExtResource("1_eb70v")]
+
+[node name="Cube" parent="Ramp1" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_4d35w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_fri14")
+
+[editable path="Ramp1"]

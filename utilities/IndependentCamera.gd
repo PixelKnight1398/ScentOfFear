@@ -5,7 +5,7 @@ extends Camera3D
 @export var target: Node3D
 @export var rotation_speed: float = 0.01
 @export var zoom_speed: float = 0.8
-@export var min_zoom: float = 5.0
+@export var min_zoom: float = 3.0
 @export var max_zoom: float = 25.0
 
 ## This is the key variable. It controls the fixed angle of the camera.

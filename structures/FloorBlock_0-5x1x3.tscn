@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwcg85asuwxux"]
+
+[ext_resource type="PackedScene" uid="uid://1x37uirbnhc" path="res://structures/FloorBlock_0-5x1x3.glb" id="1_5tdti"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dv0ax"]
+albedo_color = Color(0.272655, 0.272655, 0.272655, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1mpts"]
+albedo_color = Color(0.272655, 0.272655, 0.272655, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5tdti"]
+size = Vector3(3, 0.5, 1)
+
+[node name="FloorBlock1x3" type="StaticBody3D"]
+
+[node name="FloorBlock_0-5x1x3" parent="." instance=ExtResource("1_5tdti")]
+
+[node name="Cube" parent="FloorBlock_0-5x1x3" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_dv0ax")
+surface_material_override/1 = SubResource("StandardMaterial3D_1mpts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5tdti")
+
+[editable path="FloorBlock_0-5x1x3"]
