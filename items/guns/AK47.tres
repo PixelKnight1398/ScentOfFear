@@ -4,12 +4,10 @@
 
 [resource]
 script = ExtResource("1_ljrro")
+weapon_type = 1
 magazine_size = 10
-fire_rate = 0.5
-damage = 10.0
 item_name = "AK47"
 scene_path = "uid://bsqojb3go42l3"
-item_type = 0
 equipment_slot = 4
 secondary_equipment_slot = 5
 metadata/_custom_type_script = "uid://b6gxk43a2tme6"

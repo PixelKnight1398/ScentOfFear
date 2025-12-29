@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dv4h3fy5r44a0"]
+[gd_scene load_steps=8 format=3 uid="uid://dv4h3fy5r44a0"]
 
 [ext_resource type="Script" uid="uid://cepcmfp0nveyk" path="res://enemies/zombie.gd" id="1_uiaus"]
 
@@ -7,20 +7,27 @@ albedo_color = Color(4.69275e-07, 0.393447, 6.257e-07, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uiaus"]
 material = SubResource("StandardMaterial3D_050lg")
+radius = 0.25
+height = 1.37
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uiaus"]
 albedo_color = Color(4.69275e-07, 0.393447, 6.257e-07, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_roy8y"]
 material = SubResource("StandardMaterial3D_uiaus")
-radius = 0.1
+radius = 0.07
 height = 0.7
 radial_segments = 6
 rings = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_roy8y"]
+radius = 0.25
+height = 1.8
 
-[node name="Zombie" type="CharacterBody3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uur8n"]
+height = 1.3399658
+
+[node name="Zombie" type="CharacterBody3D" groups=["zombies"]]
 collision_mask = 5
 script = ExtResource("1_uiaus")
 
@@ -28,14 +35,36 @@ script = ExtResource("1_uiaus")
 mesh = SubResource("CapsuleMesh_uiaus")
 
 [node name="LeftArm" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 0.275732, -0.319661)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.2528497, 0.275732, -0.319661)
 mesh = SubResource("CapsuleMesh_roy8y")
 
 [node name="RightArm" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 0.275732, -0.319661)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.2668136, 0.275732, -0.319661)
 mesh = SubResource("CapsuleMesh_roy8y")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18997067, 0)
 shape = SubResource("CapsuleShape3D_roy8y")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0.44286454, -0.23626226)
+target_position = Vector3(0, -5, 0)
+
+[node name="AggressionTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="AttackArea" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018371582, -0.48841706)
+shape = SubResource("CylinderShape3D_uur8n")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]

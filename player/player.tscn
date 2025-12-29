@@ -24,21 +24,60 @@ height = 1.8
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_oul6g"]
 radius = 0.6
 
-[node name="Player" type="CharacterBody3D" groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("arms_idle", "arms_pistol", "arms_rifle", "point_pistol", "point_rifle") groups=["player"]]
 collision_mask = 5
 script = ExtResource("1_oul6g")
+current_state = 0
+arms_idle = NodePath("PlayerBody/IdleArms")
+arms_pistol = NodePath("PlayerBody/PistolArms")
+arms_rifle = NodePath("PlayerBody/RifleArms")
+point_pistol = NodePath("PistolAttachment")
+point_rifle = NodePath("RifleAttachment")
 
 [node name="PlayerBody" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028, 0)
 mesh = SubResource("CapsuleMesh_kqu6x")
 
-[node name="LeftArm" type="MeshInstance3D" parent="PlayerBody"]
+[node name="IdleArms" type="Node3D" parent="PlayerBody"]
+
+[node name="LeftArm" type="MeshInstance3D" parent="PlayerBody/IdleArms"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.277975, -0.094, 0)
 mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
 
-[node name="RightArm" type="MeshInstance3D" parent="PlayerBody"]
+[node name="RightArm" type="MeshInstance3D" parent="PlayerBody/IdleArms"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.293595, -0.094, 0)
 mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
+
+[node name="PistolArms" type="Node3D" parent="PlayerBody"]
+visible = false
+
+[node name="LeftArm" type="MeshInstance3D" parent="PlayerBody/PistolArms"]
+transform = Transform3D(0.94184065, 0.33570796, -0.015373598, 1.7697313e-09, -0.045746606, -0.998953, -0.33605987, 0.9408546, -0.043086015, 0.1912606, 0.1841424, -0.24052325)
+mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
+
+[node name="RightArm" type="MeshInstance3D" parent="PlayerBody/PistolArms"]
+transform = Transform3D(0.9355673, -0.35110056, -0.03797433, -0.06339839, -0.061198495, -0.9961101, 0.34741098, 0.93433553, -0.079514526, -0.20155433, 0.18023251, -0.23779428)
+mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
+
+[node name="RifleArms" type="Node3D" parent="PlayerBody"]
+visible = false
+
+[node name="LeftArm" type="MeshInstance3D" parent="PlayerBody/RifleArms"]
+transform = Transform3D(0.84120905, 0.5401442, -0.024735663, 3.8988093e-09, -0.04574661, -0.998953, -0.54071033, 0.8403284, -0.03848246, 0.051229745, 0.18414246, -0.36424097)
+mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
+
+[node name="RightArm" type="MeshInstance3D" parent="PlayerBody/RifleArms"]
+transform = Transform3D(0.9979044, 0.0090586245, -0.06406911, -0.06339839, -0.061198495, -0.9961101, -0.012944266, 0.99808437, -0.06049595, -0.24916434, 0.20465945, -0.06043482)
+mesh = SubResource("CapsuleMesh_oul6g")
+skeleton = NodePath("../..")
+
+[node name="CameraMount" type="Node3D" parent="PlayerBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49888974, -0.03210342)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.180816, 0)
@@ -51,8 +90,11 @@ collision_mask = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)
 shape = SubResource("CylinderShape3D_oul6g")
 
-[node name="WeaponAttachment" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.225, 0.41, -0.65)
+[node name="PistolAttachment" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28313127, -0.6074132)
+
+[node name="RifleAttachment" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19619137, 0.28313127, -0.46113265)
 
 [node name="BodyStatus" type="Node" parent="."]
 script = ExtResource("2_rkbax")

@@ -1,15 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://bapwgu4fd3x6j"]
+[gd_scene load_steps=7 format=3 uid="uid://bapwgu4fd3x6j"]
 
 [ext_resource type="Script" uid="uid://ddtcbxfy5s8tm" path="res://enemies/zombie_ragdoll.gd" id="1_ajr4j"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trmhv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_050lg"]
 transparency = 1
 albedo_color = Color(4.69275e-07, 0.393447, 6.257e-07, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ajr4j"]
-material = SubResource("StandardMaterial3D_trmhv")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ax6oj"]
+material = SubResource("StandardMaterial3D_050lg")
+radius = 0.25
+height = 1.37
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uiaus"]
+transparency = 1
+albedo_color = Color(4.69275e-07, 0.393447, 6.257e-07, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yb1cp"]
+material = SubResource("StandardMaterial3D_uiaus")
+radius = 0.07
+height = 0.7
+radial_segments = 6
+rings = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2ye1l"]
+radius = 0.25
+height = 1.6879883
 
 [node name="ZombieRagdoll" type="RigidBody3D"]
 collision_mask = 5
@@ -17,9 +32,20 @@ mass = 0.5
 script = ExtResource("1_ajr4j")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_ajr4j")
+mesh = SubResource("CapsuleMesh_ax6oj")
+
+[node name="LeftArm" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.2528497, 0.275732, -0.319661)
+visible = false
+mesh = SubResource("CapsuleMesh_yb1cp")
+
+[node name="RightArm" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.2668136, 0.275732, -0.319661)
+visible = false
+mesh = SubResource("CapsuleMesh_yb1cp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15600586, 0)
 shape = SubResource("CapsuleShape3D_2ye1l")
 
 [node name="Timer" type="Timer" parent="."]

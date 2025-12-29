@@ -1,228 +1,235 @@
-# Player.gd
 extends CharacterBody3D
 
+# --- State Management ---
+enum CameraState { FIRST_PERSON, THIRD_PERSON }
+@export var current_state: CameraState = CameraState.THIRD_PERSON
+
+@export_group("Settings")
 @export var speed: float = 5.0
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+@export_group("References")
+# Assign the camera currently being used (update this when switching modes)
 @export var camera: Camera3D
 
-# This array will keep track of all interactable items currently in range.
+# --- Inventory / Equipment ---
 var nearby_interactables := []
-
-# A variable to hold the currently equipped weapon's node instance.
 var current_weapon_instance: Node3D = null
-# A reference to our attachment point.
-@onready var weapon_attachment: Node3D = $WeaponAttachment
+
 @onready var equipment: Equipment = $Equipment
 @onready var inventory: Inventory = $Inventory
+
+@export_group("Arm Rigs")
+@export var arms_idle: Node3D
+@export var arms_pistol: Node3D
+@export var arms_rifle: Node3D
+@export var arms_shotgun: Node3D
+@export var arms_energy: Node3D
+
+@export_group("Attachment Points")
+@export var point_pistol: Marker3D
+@export var point_rifle: Marker3D
+@export var point_shotgun: Marker3D
+@export var point_energy: Marker3D
 
 @onready var long_interact_timer: Timer = $LongInteractTimer
 var long_interact_complete := false
 
 func _ready() -> void:
-	# Connect the signal so the inventory always knows when equipment changes.
 	equipment.equipment_changed.connect(inventory._on_equipment_changed)
 
 func _physics_process(delta: float) -> void:
-	# Store the vertical velocity from the previous frame.
-	var vertical_velocity: float = velocity.y
-
-	# Apply gravity.
+	# 1. Apply Gravity
 	if not is_on_floor():
-		vertical_velocity -= gravity * delta
+		velocity.y -= gravity * delta
 
-	# --- Player Movement Logic ---
-	# This variable will be used for both movement and rotation.
+	# 2. Get Input
+	var input_dir := Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
 	var move_direction := Vector3.ZERO
+
+	# 3. Handle Movement based on State
+	match current_state:
+		CameraState.FIRST_PERSON:
+			move_direction = _get_first_person_movement(input_dir)
+			# NOTE: We do NOT handle rotation here for FPS. 
+			# The Camera script handles the mouse rotation for the body.
+			
+		CameraState.THIRD_PERSON:
+			if camera:
+				move_direction = _get_third_person_movement(input_dir)
+				_handle_third_person_rotation(move_direction)
+
+	# 4. Apply Velocity
+	var vertical_velocity = velocity.y # Preserve gravity
+	velocity = move_direction * speed
+	velocity.y = vertical_velocity
+	move_and_slide()
 	
-	if camera:
-		var input_dir := Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
-		
-		# --- THIS IS THE UPDATED PART ---
+	# 5. Check Walls (Only needed for Third Person typically, but fine to keep)
+	if current_state == CameraState.THIRD_PERSON:
+		check_for_obstructing_walls()
 
-		# Get the camera's forward direction.
-		var forward := -camera.global_transform.basis.z
-		# Get the camera's right direction (this is already horizontal).
-		var right := camera.global_transform.basis.x
+# --- Movement Logic ---
 
-		# Flatten the forward vector by setting its y component to 0.
-		forward.y = 0
-		# Re-normalize it to ensure it has a length of 1.
-		forward = forward.normalized()
+func _get_first_person_movement(input_dir: Vector2) -> Vector3:
+	# In FPS, we move relative to the PLAYER'S local transform, not the camera.
+	# Because the Camera script rotates the Player Body, "transform.basis" is always correct.
+	var forward_vector = -transform.basis.z
+	var right_vector = transform.basis.x
+	
+	var direction = (forward_vector * input_dir.y + right_vector * input_dir.x)
+	return direction.normalized()
 
-		# --- END OF UPDATED PART ---
-		
-		# Get the camera's basis vectors (its forward and right directions)
-		#var forward := -camera.global_transform.basis.z
-		#var right := camera.global_transform.basis.x
+func _get_third_person_movement(input_dir: Vector2) -> Vector3:
+	# In TPS, we move relative to the CAMERA'S view.
+	var forward := -camera.global_transform.basis.z
+	var right := camera.global_transform.basis.x
 
-		# Calculate the world-space movement direction
-		move_direction = (forward * input_dir.y + right * input_dir.x)
+	forward.y = 0
+	forward = forward.normalized()
+	right.y = 0
+	right = right.normalized()
 
-		# Calculate the new velocity based on the direction and speed.
-		velocity = move_direction * speed
+	return (forward * input_dir.y + right * input_dir.x).normalized()
 
-		# Re-apply the stored vertical velocity.
-		velocity.y = vertical_velocity
-
-		move_and_slide()
-
-	# --- Player Rotation Logic ---
-	# NEW: Check if the right mouse button is being held down.
+func _handle_third_person_rotation(move_direction: Vector3) -> void:
+	# Your existing logic: Rotate towards mouse if aiming, else rotate towards movement
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		# If aiming, use the original raycast logic to face the mouse.
-		if camera:
-			var space_state := get_world_3d().direct_space_state
-			var mouse_pos := get_viewport().get_mouse_position()
-			var query := PhysicsRayQueryParameters3D.create(
-				camera.project_ray_origin(mouse_pos),
-				camera.project_ray_origin(mouse_pos) + camera.project_ray_normal(mouse_pos) * 1000
-			)
-			var result := space_state.intersect_ray(query)
+		var space_state := get_world_3d().direct_space_state
+		var mouse_pos := get_viewport().get_mouse_position()
+		var query := PhysicsRayQueryParameters3D.create(
+			camera.project_ray_origin(mouse_pos),
+			camera.project_ray_origin(mouse_pos) + camera.project_ray_normal(mouse_pos) * 1000
+		)
+		var result := space_state.intersect_ray(query)
 
-			if result:
-				var look_at_point: Vector3 = result.position
-				look_at_point.y = global_position.y
-				look_at(look_at_point, Vector3.UP)
+		if result:
+			var look_at_point: Vector3 = result.position
+			look_at_point.y = global_position.y
+			look_at(look_at_point, Vector3.UP)
 	else:
-		# NEW: If not aiming, face the direction of movement.
-		# We check if the player is actually moving to avoid snapping rotation when idle.
 		if move_direction.length_squared() > 0:
-			# The point to look at is simply the player's current position plus their movement direction.
 			var look_at_point := global_position + move_direction
 			look_at_point.y = global_position.y
 			look_at(look_at_point, Vector3.UP)
-			
-	# After all movement code, handle the wall fading.
-	check_for_obstructing_walls()
 
-# --- Interaction Logic ---
+# --- State Switching Helper ---
+func set_camera_state(new_state: CameraState, new_camera: Camera3D):
+	current_state = new_state
+	camera = new_camera
+	
+	# Optional: If switching to FPS, align player body to camera look direction immediately
+	# to prevent snapping.
+	if current_state == CameraState.FIRST_PERSON:
+		var look_dir = -new_camera.global_transform.basis.z
+		look_dir.y = 0
+		if look_dir.length() > 0:
+			look_at(global_position + look_dir, Vector3.UP)
+
+# --- Interaction Logic (Unchanged) ---
 func _unhandled_input(event: InputEvent) -> void:
-	# First, check if the event that just happened was the "shoot" action being pressed.
-	# We also check the *current state* of the right mouse button to ensure we are aiming.
-	if event.is_action_pressed("shoot") and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		use_weapon()
+	if event.is_action_pressed("shoot"):
+		# Allow shooting in FPS mode freely, or in TPS mode only if aiming
+		if current_state == CameraState.FIRST_PERSON or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			use_weapon()
 		
 	if event.is_action_pressed("reload"):
 		if current_weapon_instance and current_weapon_instance.has_method("reload"):
 			current_weapon_instance.reload()
 			
-	# When the interact button is first pressed, start the timer.
 	if event.is_action_pressed("interact"):
 		long_interact_complete = false
 		long_interact_timer.start()
 
-	# When the interact button is released...
 	if event.is_action_released("interact"):
-		# Stop the timer immediately.
 		long_interact_timer.stop()
-		
 		if long_interact_complete:
 			long_interact_complete = false
 		else:
-			# This is your QUICK interact logic (e.g., pick up item).
-			print("Short Press Detected!")
 			if not nearby_interactables.is_empty():
 				var item = nearby_interactables[0]
-				print(item.item_data)
 				if item.item_data:
 					self.pick_up(item.item_data)
 					item.queue_free()
 
-# --- Signal Functions for InteractionArea ---
 func _on_interaction_area_entered(area: Area3D) -> void:
-	# When an area enters our range, check if it's an "interactable" item.
 	if area.get_parent().is_in_group("interactables"):
-		# If it is, add it to our list of nearby items.
 		nearby_interactables.append(area.get_parent())
-		print("Entered range of: ", area.get_parent().name) # For debugging
 
 func _on_interaction_area_exited(area: Area3D) -> void:
-	# When an area leaves our range, check if it's an "interactable" item.
 	if area.get_parent().is_in_group("interactables"):
-		# If it is, remove it from our list.
 		nearby_interactables.erase(area.get_parent())
-		print("Left range of: ", area.get_parent().name) # For debugging
 
 func _long_interact_timer_timeout():
 	long_interact_complete = true
-	
 	if not nearby_interactables.is_empty():
-		print("Long interact")
 		var item = nearby_interactables[0]
 		if item.item_data:
 			self.equip(item.item_data)
 			item.queue_free()
 
-# This is now the main entry point for equipping any item.
+# --- Equipment Logic (Unchanged) ---
 func equip(item_data: ItemData):
-	# Use a match statement to check the item's type.
 	match item_data.item_type:
 		ItemData.ItemType.WEAPON:
 			_equip_weapon(item_data)
 		ItemData.ItemType.APPAREL:
 			_equip_apparel(item_data)
 		_:
-			print("Cannot equip item of this type: ", item_data.item_name)
+			print("Cannot equip item of this type")
 
-
-# This function now handles ONLY instantiating weapon models.
 func _equip_weapon(weapon_data: ItemData):
-	# First, check if a weapon is already equipped and remove it.
 	if current_weapon_instance:
 		current_weapon_instance.queue_free()
 		current_weapon_instance = null
 
-	# Check if the weapon has a scene to instance.
 	if weapon_data and weapon_data.scene_path:
 		var new_weapon_scene = load(weapon_data.scene_path)
 		current_weapon_instance = new_weapon_scene.instantiate()
 		
-		# Add the new weapon instance to the attachment point.
-		weapon_attachment.add_child(current_weapon_instance)
+		hide_all_arms()
 		
-		# Tell the weapon it's been equipped so it can run its own setup.
+		match weapon_data.weapon_type:
+			weapon_data.WeaponType.PISTOL:
+				point_pistol.add_child(current_weapon_instance)
+				arms_pistol.visible = true
+			weapon_data.WeaponType.RIFLE:
+				point_rifle.add_child(current_weapon_instance)
+				arms_rifle.visible = true
+			_:
+				print("Unknown Weapon Type")
+
 		if current_weapon_instance.has_method("on_equipped"):
 			current_weapon_instance.on_equipped(inventory)
-	else:
-		print("Couldn't find scene path to equip weapon: ", weapon_data.item_name)
 
+func hide_all_arms():
+	arms_idle.visible = false
+	arms_pistol.visible = false
+	arms_rifle.visible = false
+	#arms_shotgun.visible = false
+	#arms_energy.visible = false
 
-# This new function handles ONLY apparel data.
 func _equip_apparel(apparel_data: ItemData):
-	# Simply tell the Equipment component to handle this item.
-	# The Equipment component will put the data in the correct slot.
 	equipment.equip_item(apparel_data, apparel_data.equipment_slot)
 
 func pick_up(item_data: ItemData) -> void:
 	self.inventory.add_item(item_data)
 
 func use_weapon() -> void:
-	# First, make sure a weapon is actually equipped.
 	if not current_weapon_instance:
 		return
-		
 	current_weapon_instance.action()
 
 func check_for_obstructing_walls() -> void:
-	if not camera:
-		return
-
+	if not camera: return
+	
 	var space_state := get_world_3d().direct_space_state
-	var player_pos := global_position
-	var camera_pos := camera.global_position
-
-	var query := PhysicsRayQueryParameters3D.create(camera_pos, player_pos)
-	query.collision_mask = 1 << 2 # Assumes "walls" are on Physics Layer 3
+	var query := PhysicsRayQueryParameters3D.create(camera.global_position, global_position)
+	query.collision_mask = 1 << 2 
 	query.exclude = [self]
-
 	var result := space_state.intersect_ray(query)
-
 	if result:
-		# Get the individual wall piece that was hit.
 		var wall_piece = result.collider
-		# Get its parent, which is the wall section controller.
 		var wall_section = wall_piece.get_parent()
-
-		# Call the fade_out function on the parent controller.
 		if wall_section and wall_section.has_method("fade_out"):
 			wall_section.fade_out()

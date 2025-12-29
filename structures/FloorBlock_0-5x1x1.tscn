@@ -12,6 +12,7 @@ albedo_color = Color(0.272655, 0.272655, 0.272655, 1)
 size = Vector3(1, 0.5, 1)
 
 [node name="FloorBlock1x1" type="StaticBody3D"]
+collision_layer = 33
 
 [node name="FloorBlock_0-5x1x1" parent="." instance=ExtResource("1_qqvaj")]
 

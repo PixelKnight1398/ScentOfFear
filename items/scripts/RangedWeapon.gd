@@ -29,6 +29,8 @@ func action() -> void:
 		# Create an instance of our preloaded bullet scene.
 		var bullet = bullet_scene.instantiate()
 		get_tree().get_root().add_child(bullet)
+		# Broadcast a noise event to all enemies
+		get_tree().call_group("zombies", "hear_noise", global_position, 50.0)
 		bullet.global_transform = muzzle.global_transform
 		current_ammo_in_mag -= 1
 

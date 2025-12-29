@@ -8,7 +8,7 @@
 radius = 4.395
 
 [node name="1911" groups=["guns", "interactables"] instance=ExtResource("1_s0x1l")]
-transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
+transform = Transform3D(0.04, 0, 0, 0, 0.04, 0, 0, 0, 0.04, 0, 0, 0)
 script = ExtResource("2_2aex5")
 item_data = ExtResource("3_tdjar")
 

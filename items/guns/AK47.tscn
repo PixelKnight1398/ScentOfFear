@@ -8,7 +8,7 @@
 radius = 3.75
 
 [node name="AK47" groups=["interactables"] instance=ExtResource("1_jyk0g")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 script = ExtResource("2_uneap")
 item_data = ExtResource("3_hopsy")
 

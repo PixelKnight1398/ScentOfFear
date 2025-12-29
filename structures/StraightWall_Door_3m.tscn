@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cs48mv2lwd0n6"]
+[gd_scene load_steps=11 format=3 uid="uid://cs48mv2lwd0n6"]
 
 [ext_resource type="Script" uid="uid://waoopjg340vt" path="res://structures/scripts/Fadeable.gd" id="1_0s7ad"]
 [ext_resource type="PackedScene" uid="uid://bt76btcs0ejr4" path="res://structures/StraightWall_Door_3m.glb" id="1_f6i53"]
@@ -16,10 +16,16 @@ albedo_color = Color(0.310617, 0.310617, 0.310617, 1)
 size = Vector3(3, 0.5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cf5d4"]
-size = Vector3(1.0399, 1.99902, 0.1)
+size = Vector3(0.6536517, 1.99902, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wydxa"]
-size = Vector3(1.04, 1.999, 0.1)
+size = Vector3(0.63353515, 1.999, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0s7ad"]
+size = Vector3(0.9, 0.27000427, 1.5652466)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0s7ad"]
+size = Vector3(0.9, 0.27, 1.565)
 
 [node name="StaticBody3D" type="StaticBody3D" node_paths=PackedStringArray("mesh_instance")]
 collision_layer = 4
@@ -48,5 +54,34 @@ shape = SubResource("BoxShape3D_cf5d4")
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.979986, -0.25042, 0)
 shape = SubResource("BoxShape3D_wydxa")
+
+[node name="NavMeshCollider" type="StaticBody3D" parent="."]
+collision_layer = 32
+
+[node name="NavMeshCollider1" type="CollisionShape3D" parent="NavMeshCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1729401, -0.250513, 0)
+shape = SubResource("BoxShape3D_cf5d4")
+
+[node name="NavMeshCollider2" type="CollisionShape3D" parent="NavMeshCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1832184, -0.25042, 0)
+shape = SubResource("BoxShape3D_wydxa")
+
+[node name="NavBridge" type="StaticBody3D" parent="."]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavBridge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3656998, 9.1552734e-05)
+visible = false
+shape = SubResource("BoxShape3D_0s7ad")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavBridge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.365511, 0)
+visible = false
+mesh = SubResource("BoxMesh_0s7ad")
+
+[node name="NavigationLink3D" type="NavigationLink3D" parent="."]
+transform = Transform3D(0.79780495, 0, -0.60291564, 0, 1, 0, 0.60291564, 0, 0.79780495, -0.015230179, -1.1753827, -0.06382024)
+start_position = Vector3(-0.28, 0, -0.396)
+end_position = Vector3(0.402, 0, 0.472)
 
 [editable path="StraightWall_Door_3m"]
